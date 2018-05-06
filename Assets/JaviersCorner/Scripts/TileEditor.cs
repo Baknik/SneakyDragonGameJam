@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -10,6 +11,12 @@ public class TileEditor : Editor {
 	public static bool editing = false;
 
 	private Tile targetTile;
+	private Tile[] targetTiles;
+
+	private Vector3 initMousePos;
+
+	string initTargetName;
+	string[] initNames;
 
 	void OnSceneGUI(){
 
@@ -36,38 +43,37 @@ public class TileEditor : Editor {
 		HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 
 		switch( e.type ){
-			case EventType.MouseDown:
-
-				// if()
-
-			break;
-			case EventType.MouseUp:
-
-			break;
+			// case EventType.
 			case EventType.MouseDrag:
 
 				
-
 				if( e.button == 0 ){
-					Vector3 mousePosition = e.mousePosition;
-					Ray ray = HandleUtility.GUIPointToWorldRay(mousePosition);
-					Plane p = new Plane( -Vector3.forward, Vector3.zero );
-					float rayDist;
-					if( p.Raycast( ray, out rayDist ) ){
-						mousePosition = ray.GetPoint( rayDist );
-					}
 
 					targetTile = (Tile)target;
 
-					VectorT newPos = VectorT.WorldToGrid( mousePosition );
+					VectorT newPos = VectorT.WorldToGrid( SceneViewToWorld( e.mousePosition ) );
 					newPos.z = targetTile.gPosition.z;
 					targetTile.SetPosition( newPos );
 
-					// mousePosition 
 				}
 
 			break;
 		}
+
+	}
+
+	Vector3 SceneViewToWorld( Vector2 mousePos, float z = 0){
+
+		Plane plane = new Plane( -Vector3.forward, Vector3.forward * z );
+		float rayDist;
+
+		Vector3 mousePosition = mousePos;
+		Ray ray = HandleUtility.GUIPointToWorldRay(mousePosition);
+		if( plane.Raycast( ray, out rayDist ) ){
+			mousePosition = ray.GetPoint( rayDist );
+		}
+
+		return mousePosition;
 
 	}
 	
