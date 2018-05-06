@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
 				this.Animator.SetBool("Casting", this.castingFireball);
 				Fireball newFireball = Instantiate(this.FireballPrefab, this.transform.position + (Vector3)this.FireballStartPositionOffset, Quaternion.identity);
 				Vector2 fireballCastDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - newFireball.transform.position).normalized;
-				fireballCastDirection = Quaternion.Euler(0, 0, UnityEngine.Random.value * (this.CurrentDrunkiness * this.FireballDrunkinessOffset)) * fireballCastDirection;
+				fireballCastDirection = Quaternion.Euler(0, 0, (UnityEngine.Random.value - 0.5f) * (this.CurrentDrunkiness * this.FireballDrunkinessOffset)) * fireballCastDirection;
 				newFireball.Direction = fireballCastDirection;
 				this.Animator.SetFloat("Cast Direction X", (Mathf.Abs(newFireball.Direction.x) > Mathf.Abs(newFireball.Direction.y)) ? newFireball.Direction.x : 0f);
 				this.Animator.SetFloat("Cast Direction Y", (Mathf.Abs(newFireball.Direction.y) > Mathf.Abs(newFireball.Direction.x)) ? newFireball.Direction.y : 0f);
@@ -116,7 +116,13 @@ public class Player : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		this.Rigidbody2D.velocity = new Vector2(this.horzMoveInput, this.vertMoveInput);
-		// this.Rigidbody2D.AddForce(new Vector2(this.horzMoveInput, this.vertMoveInput));
+		if (this.castingFireball)
+		{
+			this.Rigidbody2D.velocity = Vector2.zero;
+		}
+		else
+		{
+			this.Rigidbody2D.velocity = new Vector2(this.horzMoveInput, this.vertMoveInput);
+		}
 	}
 }
