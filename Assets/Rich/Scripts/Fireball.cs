@@ -6,14 +6,17 @@ public class Fireball : MonoBehaviour {
 
 	[Header("Settings")]
 	public float Speed;
+	public float Damage;
 
 	[Header("Runtime")]
 	public Vector2 Direction;
 
 	private Rigidbody2D Rigidbody2D;
+	private SpriteRenderer SpriteRenderer;
 
 	private void Awake() {
 		this.Rigidbody2D = this.GetComponent<Rigidbody2D>();
+		this.SpriteRenderer = this.GetComponent<SpriteRenderer>();
 	}
 
 	// Use this for initialization
@@ -23,13 +26,24 @@ public class Fireball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Sorting
+		this.SpriteRenderer.sortingOrder = (int)(this.transform.position.y * -1f);
+
 		this.Rigidbody2D.velocity = this.Direction.normalized * this.Speed;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag == "World" || other.tag == "Enemy")
+		if (other.tag != "Player")
 		{
 			GameObject.Destroy(this.gameObject);
+		}
+		if (other.tag == "Enemy")
+		{
+			Guard guard = other.GetComponent<Guard>();
+			if (guard)
+			{
+				guard.Hit(this.Damage);
+			}
 		}
 	}
 }

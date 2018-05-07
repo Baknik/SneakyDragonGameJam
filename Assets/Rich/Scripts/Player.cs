@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Player : MonoBehaviour {
 
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour {
 	public float SoberingRate;
 	public float DrinkDrunkiness;
 	public float FireballDrunkinessOffset;
+	public float MaxHealth;
 
 	[Header("Prefabs")]
 	public Fireball FireballPrefab;
@@ -22,13 +24,17 @@ public class Player : MonoBehaviour {
 	[Header("References")]
 	public Slider ManaSlider;
 	public Slider DrunkinessSlider;
+	public Slider HealthSlider;
+	public Transform EndGamePanel;
 
 	[Header("Runtime")]
 	public float CurrentMana;
 	public float CurrentDrunkiness;
+	public float CurrentHealth;
 
 	private Rigidbody2D Rigidbody2D;
 	private Animator Animator;
+	private SpriteRenderer SpriteRenderer;
 	private float horzMoveInput;
 	private float vertMoveInput;
 	private bool castingFireball;
@@ -38,10 +44,13 @@ public class Player : MonoBehaviour {
 	private void Awake() {
 		this.Rigidbody2D = this.GetComponent<Rigidbody2D>();
 		this.Animator = this.GetComponent<Animator>();
+		this.SpriteRenderer = this.GetComponent<SpriteRenderer>();
 	}
 
 	// Use this for initialization
 	void Start () {
+		Time.timeScale = 1f;
+
 		this.Animator.SetFloat("Horz Movement", 0f);
 		this.Animator.SetFloat("Vert Movement", 0f);
 		this.Animator.SetFloat("Casting Direction X", 0f);
@@ -53,10 +62,14 @@ public class Player : MonoBehaviour {
 
 		this.CurrentMana = this.MaxMana;
 		this.CurrentDrunkiness = 0f;
+		this.CurrentHealth = this.MaxHealth;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// Sorting
+		this.SpriteRenderer.sortingOrder = (int)(this.transform.position.y * -1f);
+		
 		// Sobering
 		this.CurrentDrunkiness -= this.SoberingRate * Time.deltaTime;
 		this.CurrentDrunkiness = Mathf.Clamp(this.CurrentDrunkiness, 0f, this.MaxDrunkiness);
@@ -113,6 +126,9 @@ public class Player : MonoBehaviour {
 
 		// Update drunkiness slider
 		this.DrunkinessSlider.value = this.CurrentDrunkiness / this.MaxDrunkiness;
+
+		// Update health slider
+		this.HealthSlider.value = this.CurrentHealth / this.MaxHealth;
 	}
 
 	void FixedUpdate() {
@@ -124,5 +140,23 @@ public class Player : MonoBehaviour {
 		{
 			this.Rigidbody2D.velocity = new Vector2(this.horzMoveInput, this.vertMoveInput);
 		}
+	}
+
+	public void Damage(float amount)
+	{
+		this.CurrentHealth -= amount;
+		this.CurrentHealth = Mathf.Clamp(this.CurrentHealth, 0f, this.MaxHealth);
+		if (this.CurrentHealth <= 0f)
+		{
+			Sequence endGameSequence = DOTween.Sequence();
+			endGameSequence.Append(this.EndGamePanel.DOScale(new Vector3(1f, 1f, 1f), 0.5f).SetEase(Ease.OutBack));
+			endGameSequence.AppendCallback(StopTime);
+			endGameSequence.Play();
+		}
+	}
+
+	public void StopTime()
+	{
+		Time.timeScale = 0f;
 	}
 }
