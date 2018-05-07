@@ -26,7 +26,7 @@ public class FadeOnNear : MonoBehaviour {
 
 	private float opacity;
 
-	private bool fadedOut;
+	private bool fadedOut = false;
 
 	// Use this for initialization
 	void Start () {
@@ -55,7 +55,7 @@ public class FadeOnNear : MonoBehaviour {
 				tween = DOTween.To( delegate(){ return opacity; }, delegate( float x ){ opacity = x; } , 0, 0.5f );
 			} else {
 				tween.Kill();
-				tween = DOTween.To( delegate(){ return opacity; }, delegate( float x ){ opacity = x; } , 0, 0.5f );
+				tween = DOTween.To( delegate(){ return opacity; }, delegate( float x ){ opacity = x; } , 1, 0.5f );
 			}
 		}
 
