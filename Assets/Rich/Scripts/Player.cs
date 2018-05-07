@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Sorting
-		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y + 2f) * -1f);
+		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y - 0.35f) * -1f);
 		
 		// Sobering
 		this.CurrentDrunkiness -= this.SoberingRate * Time.deltaTime;

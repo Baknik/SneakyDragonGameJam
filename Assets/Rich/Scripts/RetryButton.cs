@@ -17,6 +17,6 @@ public class RetryButton : MonoBehaviour {
 
 	public void ReloadScene()
 	{
-		SceneManager.LoadScene("RichScene");
+		SceneManager.LoadScene("FirstLevel");
 	}
 }

@@ -27,7 +27,7 @@ public class Fireball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Sorting
-		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y + 2f) * -1f);
+		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y - 0.35f) * -1f);
 
 		this.Rigidbody2D.velocity = this.Direction.normalized * this.Speed;
 	}
