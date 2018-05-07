@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-
-// [ExecuteInEditMode]
 [RequireComponent(typeof(SpriteRenderer))]
 public class Tile : MonoBehaviour {
 
@@ -15,7 +13,9 @@ public class Tile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		sr = GetComponent<SpriteRenderer>();
+
 	}
 	
 
