@@ -631,12 +631,12 @@ Prefab:
     - target: {fileID: 61701479096657910, guid: 585dbef41160833498f021f5698c797a,
         type: 2}
       propertyPath: m_Offset.x
-      value: -0.023415208
+      value: -0.07461053
       objectReference: {fileID: 0}
     - target: {fileID: 61701479096657910, guid: 585dbef41160833498f021f5698c797a,
         type: 2}
       propertyPath: m_Size.x
-      value: 0.50817823
+      value: 0.4057876
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 585dbef41160833498f021f5698c797a, type: 2}

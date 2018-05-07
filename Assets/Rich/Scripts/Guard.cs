@@ -54,7 +54,7 @@ public class Guard : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Sorting
-		this.SpriteRenderer.sortingOrder = (int)(this.transform.position.y * -1f);
+		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y + 2f) * -1f);
 
 		// Find direction to player
 		Vector3 dirToPlayer = (this.Player.transform.position - this.transform.position).normalized;

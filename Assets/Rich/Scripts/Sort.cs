@@ -18,6 +18,6 @@ public class Sort : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.SpriteRenderer.sortingOrder = (int)(this.transform.position.y * -1f);
+		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y + 2f) * -1f);
 	}
 }
