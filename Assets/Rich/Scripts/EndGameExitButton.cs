@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitButton : MonoBehaviour {
+public class EndGameExitButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

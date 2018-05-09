@@ -35,6 +35,7 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D Rigidbody2D;
 	private Animator Animator;
 	private SpriteRenderer SpriteRenderer;
+	private SpriteRenderer BlushSpriteRenderer;
 	private float horzMoveInput;
 	private float vertMoveInput;
 	private bool castingFireball;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour {
 		this.Rigidbody2D = this.GetComponent<Rigidbody2D>();
 		this.Animator = this.GetComponent<Animator>();
 		this.SpriteRenderer = this.GetComponent<SpriteRenderer>();
+		this.BlushSpriteRenderer = this.GetComponentInChildren<Blush>().GetComponent<SpriteRenderer>();
 	}
 
 	// Use this for initialization
@@ -67,6 +69,9 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Blush opacity
+		this.BlushSpriteRenderer.color = new Color(1f, 0.8f, 0.8f, this.CurrentDrunkiness / this.MaxDrunkiness);
+
 		// Sorting
 		this.SpriteRenderer.sortingOrder = (int)((this.transform.position.y - 0.35f) * -1f);
 		

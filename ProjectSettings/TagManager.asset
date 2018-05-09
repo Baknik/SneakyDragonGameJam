@@ -6,6 +6,7 @@ TagManager:
   tags:
   - World
   - Enemy
+  - Guard Swipe
   layers:
   - Default
   - TransparentFX
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 597641497
+    locked: 0
+  - name: Blush
+    uniqueID: 3326822991
     locked: 0
   - name: UI
     uniqueID: 1108713683

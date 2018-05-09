@@ -33,7 +33,7 @@ public class Fireball : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag != "Player")
+		if (other.tag != "Player" && other.tag != "Guard Swipe")
 		{
 			GameObject.Destroy(this.gameObject);
 		}
